@@ -7,8 +7,13 @@ import (
 )
 
 func main() {
-	pin0 := rpio.Pin(0)
-	pin1 := rpio.Pin(1)
+	if err := rpio.Open(); err != nil {
+		log.Fatal(err)
+	}
+	defer rpio.Close()
+
+	pin0 := rpio.Pin(17)
+	pin1 := rpio.Pin(18)
 
 	pin0.Input()
 	pin1.Input()
@@ -17,6 +22,8 @@ func main() {
 		val0 := pin0.Read()
 		val1 := pin1.Read()
 		log.Printf("Value pin0:%v pin1:%v", val0, val1)
-		time.Sleep(time.Second)
+		time.Sleep(100 * time.Microsecond)
 	}
 }
+
+func readGPIO()
