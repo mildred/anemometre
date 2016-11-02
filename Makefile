@@ -4,3 +4,9 @@ help:
 build: ## Build for Raspberry Pi
 	GOARCH=arm GOARM=5 go build .
 
+fetch.go: node_modules/whatwg-fetch/fetch.js
+	echo "package main;" >$@
+	echo 'const html_fetch string = `' >>$@
+	cat $< | sed 's/`/` + "`" + `/g' >>$@
+	echo '`' >>$@
+
